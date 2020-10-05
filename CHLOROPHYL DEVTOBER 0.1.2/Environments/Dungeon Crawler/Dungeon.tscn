@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Utilities/Teleporter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Environments/Dungeon Crawler/Dungeon.gd" type="Script" id=3]
+[ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Utilities/Visual Text Debug.tscn" type="PackedScene" id=5]
+[ext_resource path="res://UI/ChlorophylUI.tscn" type="PackedScene" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 510.322, 43.7975 )
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 19.7057
+margin_top = 148.589
+margin_right = 87.7057
+margin_bottom = 162.589
+text = "DUNGEON"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 144.809, 170.785 )
+
+[node name="Teleporter Area2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 512.661, 73.486 )
+
+[node name="CollisionShape2D" parent="Teleporter Area2D" index="0"]
+shape = SubResource( 1 )
+
+[node name="Sprite" parent="Teleporter Area2D" index="1"]
+position = Vector2( 2.6371, 1.89999 )
+scale = Vector2( 15.8473, 1 )
+
+[node name="Enemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 487.961, 462.909 )
+
+[node name="Visual Text Debug" parent="." instance=ExtResource( 5 )]
+margin_left = 778.833
+margin_top = 126.582
+margin_right = 818.833
+margin_bottom = 140.582
+text = "Visual Text Debug
+"
+
+[node name="Chlorophyl UI" parent="." instance=ExtResource( 6 )]
+[connection signal="area_entered" from="Teleporter Area2D" to="." method="_on_Teleporter_Area2D_area_entered"]
+
+[editable path="Teleporter Area2D"]
+
+[editable path="Enemy"]
