@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Companion/Companion.gd" type="Script" id=2]
+[ext_resource path="res://Utilities/TargetDetectionZone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Overlap/SoftCollision.tscn" type="PackedScene" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 15.575
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 17.0481
+height = 23.7063
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 155.862
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 15.9783
+height = 25.8196
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 288.293
+
+[node name="Companion" type="KinematicBody2D" groups=[
+"PersistCompanion",
+]]
+collision_layer = 8
+collision_mask = 5
+script = ExtResource( 2 )
+MAX_SPEED = 300
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.0117647, 1, 0.0745098, 1 )
+position = Vector2( 0.773773, -0.386887 )
+scale = Vector2( 0.854916, 0.480116 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0, 0.463295 )
+shape = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+rotation = -1.5708
+shape = SubResource( 2 )
+
+[node name="EnemyDetectionZone" parent="." instance=ExtResource( 3 )]
+visible = false
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="EnemyDetectionZone" index="0"]
+shape = SubResource( 3 )
+
+[node name="Name" type="Label" parent="."]
+margin_left = -19.5377
+margin_top = -34.6637
+margin_right = 20.4623
+margin_bottom = -20.6637
+text = "Friend"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoftCollision" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+rotation = -1.5708
+shape = SubResource( 4 )
+
+[node name="Command" type="Label" parent="."]
+margin_left = -20.2457
+margin_top = -58.9765
+margin_right = 19.7543
+margin_bottom = -44.9765
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 3 )]
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+shape = SubResource( 5 )
+
+[editable path="EnemyDetectionZone"]
+
+[editable path="SoftCollision"]
+
+[editable path="PlayerDetectionZone"]
