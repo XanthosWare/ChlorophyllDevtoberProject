@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Environments/Dungeon Crawler/tiles.tres" type="TileSet" id=1]
+[ext_resource path="res://Environments/Dungeon Crawler/RandomDungeon.gd" type="Script" id=2]
+[ext_resource path="res://Utilities/Teleporter.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://UI/ChlorophylUI.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 104.86
+
+[node name="Random Dungeon" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Rooms" type="Node" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+
+[node name="TileMap" type="TileMap" parent="."]
+show_behind_parent = true
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+format = 1
+
+[node name="Teleporter Area2D" parent="." instance=ExtResource( 3 )]
+position = Vector2( 346.066, 135.095 )
+
+[node name="CollisionShape2D" parent="Teleporter Area2D" index="0"]
+shape = SubResource( 1 )
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+
+[node name="RemoteTransform2D" parent="Player" index="3"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Chlorophyl UI" parent="CanvasLayer" instance=ExtResource( 5 )]
+[connection signal="body_entered" from="Teleporter Area2D" to="." method="_on_Teleporter_Area2D_body_entered"]
+
+[editable path="Teleporter Area2D"]
+
+[editable path="Player"]
